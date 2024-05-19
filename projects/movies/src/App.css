@@ -1,0 +1,55 @@
+.page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.page form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.listContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    list-style: none;
+    gap: 24px;
+    align-items: center; /* Asegura que las tarjetas tengan la misma altura */
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    padding-top: 36px;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    border: solid 1px rgb(63, 60, 60);
+    border-radius: 5px;
+    background-color: rgba(6, 6, 87, 0.075);
+    box-shadow: 1px 1px 15px 3px rgba(0, 0, 0, 0.486);
+    justify-content: space-between; 
+    min-height: 100%; 
+    min-width: 100%;
+    
+}
+
+.listItem img {
+    width: 100%;
+    height: auto;
+    max-height: 300px; 
+    
+}
+.listItem h3,
+.listItem p {
+    padding: 8px; /* Ajusta este valor según sea necesario */
+}
+
+
+main {
+    width: 100%;
+}
