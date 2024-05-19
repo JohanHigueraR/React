@@ -1,39 +1,33 @@
-import { useState, useEffect } from "react";
-import mockSucces from "../mocks/mocks.json"; // Suponiendo que lo usarás en algún lugar
-import strings from "../strings";
-const { URL_API, API_KEY } = strings;
+import { useState, useEffect } from 'react'
+import { getMovies } from '../services/getMovies'
 
-export function useMovies({ query }) {
-  const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
+export function useMovies ({ query }) {
+  const [movies, setMovies] = useState([])
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (!query) return;
-
-    const fetchMovies = async () => {
+    if (!query) return
+    async function fetchData () {
       try {
-        const response = await fetch(`${URL_API}?apikey=${API_KEY}&s=${query}`);
-        const data = await response.json();
-        if (data.Response === "True") {
-          setMovies(data.Search);
+        setLoading(true)
+        const response = await getMovies({ query })
+        if (response.error) {
+          setError(response.error)
+          setMovies([])
         } else {
-          setMovies([]);
-          setError(data.Error);
+          setMovies(response)
+          setError('')
         }
       } catch (error) {
-        setError(error.message);
+        setError(error)
+      } finally {
+        setLoading(false)
       }
-    };
+    }
 
-    fetchMovies();
-  }, [query]);
+    fetchData()
+  }, [query])
 
-  const mappedMovies = movies?.map((movie) => ({
-    id: movie.imdbID,
-    name: movie.Title,
-    category: movie.Type,
-    image: movie.Poster,
-  }));
-
-  return { movies: mappedMovies, error };
+  return { movies, error, loading }
 }
